@@ -27,6 +27,7 @@ struct TechChallengeApp: App {
                     Label("Insights", systemImage: "chart.pie.fill")
                 }
             }
+            .environmentObject(TransactionViewModel(transactions: ModelData.sampleTransactions))
         }
     }
 }

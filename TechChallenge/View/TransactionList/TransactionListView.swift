@@ -10,27 +10,35 @@ import SwiftUI
 struct TransactionListView: View {
     
     // MARK: Properties
-    @EnvironmentObject private var viewModel: TransactionListViewModel
-    var transactions: [TransactionModel] = ModelData.sampleTransactions
-    @State var selectedCategory: TransactionModel.Category?
+    @EnvironmentObject var viewModel: TransactionViewModel
     
     var body: some View {
         VStack {
-            
-            FilterListView(selectedCategory: $selectedCategory)
-                .onChange(of: selectedCategory) { category in
-                    print(category)
+            // Transactions Filter
+            FilterListView(selectedCategory: $viewModel.selectedCategory)
+                .onChange(of: viewModel.selectedCategory) { category in
+                    viewModel.updateTransactionsList(for: category)
+                    viewModel.updateTransactionsListSum(for: category)
                 }
             
+            // Transaction List
             List {
-                ForEach(transactions) { transaction in
-                    TransactionView(transaction: transaction)
+                ForEach(viewModel.filteredSortedTransactions) { transaction in
+                    TransactionView(transaction: transaction,
+                                    isPinned: !viewModel.unpinnedTransactions.contains(transaction))
+                        .onTapGesture {
+                            viewModel.pinOrUnpinTransactions(transaction)
+                        }
                 }
             }
             .animation(.easeIn)
             .listStyle(PlainListStyle())
             .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("Transactions")
+            .navigationTitle("Transactions")
+        }
+        .onAppear {
+            viewModel.updateTransactionsListSum(for: viewModel.selectedCategory)
+            viewModel.updateTransactionsList(for: viewModel.selectedCategory)
         }
     }
 }
