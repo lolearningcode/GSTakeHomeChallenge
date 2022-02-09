@@ -34,4 +34,11 @@ extension Text {
             .bold()
             .foregroundColor(Color(UIColor.label))
     }
+    
+    func categoryFilterFont() -> some View {
+        self
+            .font(.title2)
+            .bold()
+            .foregroundColor(.white)
+    }
 }
