@@ -151,8 +151,7 @@
 				3CE226CB26B2E44E00B3D085 /* Insights */,
 				3CE226C826B2E42800B3D085 /* TransactionList */,
 				3CE226CC26B2E47300B3D085 /* Shared */,
-				ECCFA0C727B44B5900C98693 /* FilterListView.swift */,
-				ECCFA0C927B44BDF00C98693 /* FilterView.swift */,
+				EC046D7427B47DC80095DB05 /* Filters */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -195,6 +194,15 @@
 				3C296ED026B404A5006DF667 /* Path.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EC046D7427B47DC80095DB05 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				ECCFA0C727B44B5900C98693 /* FilterListView.swift */,
+				ECCFA0C927B44BDF00C98693 /* FilterView.swift */,
+			);
+			path = Filters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
