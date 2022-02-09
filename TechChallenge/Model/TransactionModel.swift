@@ -42,7 +42,7 @@ struct TransactionModel {
     let provider: Provider?
 }
 
-extension TransactionModel: Identifiable {}
+extension TransactionModel: Identifiable, Hashable {}
 
 // MARK: - Category
 
