@@ -33,9 +33,14 @@ struct TransactionListView: View {
             }
             .animation(.easeIn)
             .listStyle(PlainListStyle())
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Transactions")
+            
+            TransactionSumView(selectedCategory: viewModel.selectedCategory, price: viewModel.transactionsSum)
+                .padding(.horizontal, 10)
+                .padding(.bottom, 10)
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Transactions")
+        
         .onAppear {
             viewModel.updateTransactionsListSum(for: viewModel.selectedCategory)
             viewModel.updateTransactionsList(for: viewModel.selectedCategory)
