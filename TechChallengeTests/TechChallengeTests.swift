@@ -6,27 +6,43 @@
 //
 
 import XCTest
+@testable import TechChallenge
 
 class TechChallengeTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    var sut: TransactionViewModel!
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    override func setUp() {
+        sut = TransactionViewModel(transactions: ModelData.sampleTransactions)
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    override func tearDown() {
+        sut = nil
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    // MARK: - Category Selection Tests
+    func test_ViewModel_WhenCategoryIsSelected_ShouldProvideSelectedCategorysTransactions() {
+        // Arrange
+        let entertainmentTransactions = [ModelData.sampleTransactions[0]]
+        let selectedCategory = TransactionModel.Category.entertainment
+        
+        // Act
+        sut.updateTransactionsList(for: selectedCategory)
+        
+        // Assert
+        XCTAssertTrue(sut.filteredSortedTransactions.count == 1, "Only 1 entertainment transaction")
+        XCTAssertEqual(sut.filteredSortedTransactions, entertainmentTransactions, "Filtered transactions should return only entertainment transactions when category button is selected.")
     }
-
+    
+    func test_ViewModel_GivenTransactionsWhenCategoryIsSelected_ShouldProvideTheSumOfAllTransactions() {
+        // Arrange
+        let transactionSum: Int = 82
+        let selectedCategory = TransactionModel.Category.entertainment
+        
+        // Act
+        sut.updateTransactionsListSum(for: selectedCategory)
+        
+        // Assert
+        XCTAssertEqual(Int(sut.transactionsSum), transactionSum, "Transaction sum is valid.")
+    }
 }
