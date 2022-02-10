@@ -14,16 +14,32 @@ struct RingView: View {
     
     private func ratio(for categoryIndex: Int) -> Double {
         // TODO: calculate ratio for each category according to cummulative expense
+        // Get Sum Of The Category
+        let categorySum = transactions
+            .filter { $0.category == Category[categoryIndex] }
+            .reduce(0) { $0 + $1.amount }
+        // Get sum of all of the transactions
+        let transactionSum = transactions
+            .reduce(0) { $0 + $1.amount }
         
-        // Returning sample value
-        0.2
+        // Divide the sum of categories by sum of transactions to get the percentage
+        return categorySum / transactionSum
     }
     
     private func offset(for categoryIndex: Int) -> Double {
         // TODO: calculate offset for each category according to cummulative expense
         
+        var offset: Double = 0
+        // Get the first index
+        guard categoryIndex > 0 else { return offset }
+        
+        // Iterate through the other indexes
+        (0 ..< categoryIndex).forEach { index in
+            offset += ratio(for: index)
+        }
+        
         // Returning sample value
-        Double(categoryIndex) * 0.2
+        return offset
     }
 
     private func gradient(for categoryIndex: Int) -> AngularGradient {
